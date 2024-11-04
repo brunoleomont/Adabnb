@@ -8,5 +8,5 @@
   <p class="listing-location">
     {{ housingLocation.city }}, {{ housingLocation.state }}
   </p>
-  <a >Learn More</a>
+  <a [routerLink]="['/home-detail/', housingLocation.id]">Learn More</a>
 </section>

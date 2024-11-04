@@ -20,17 +20,6 @@ export class HomeCardDetailComponent {
 
   id!: Number;
 
-  constructor(private route: ActivatedRoute) {}
-  ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    this.housingLocation = this.houses.find(house => house.id === this.id) as House;
-    this.applyForm = new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      email: new FormControl('')
-    });
-  }
-
   houses: House[] = [{
     id: 1,
     name: 'Acme Fresh Start Housing',
@@ -52,6 +41,18 @@ export class HomeCardDetailComponent {
     state: 'AK',
     photo: `${this.baseUrl}/i-do-nothing-but-love-lAyXdl1-Wmc-unsplash.jpg`
   }];
+
+  constructor(private route: ActivatedRoute) {}
+  ngOnInit() {
+    this.id = this.route.snapshot.params['id'];
+    this.housingLocation = this.houses.find(
+      house => house.id == this.id) as House;
+    this.applyForm = new FormGroup({
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+      email: new FormControl('')
+    });
+  }
 
   submitApplication() {
     alert(JSON.stringify(this.applyForm.value));
