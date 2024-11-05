@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { House } from '../models/house';
 import { ActivatedRoute } from '@angular/router';
+import { HouseService } from '../house.service';
 
 @Component({
   selector: 'app-home-card-detail',
@@ -12,41 +13,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HomeCardDetailComponent {
 
-  baseUrl = 'https://angular.io/assets/images/tutorials/faa';
-
   applyForm!: FormGroup;
 
   housingLocation!: House;
 
-  id!: Number;
+  id!: number;
 
-  houses: House[] = [{
-    id: 1,
-    name: 'Acme Fresh Start Housing',
-    city: 'Chicago',
-    state: 'IL',
-    photo: `${this.baseUrl}/bernard-hermant-CLKGGwIBTaY-unsplash.jpg`
-  },
-  {
-    id: 2,
-    name: 'A113 Transitional Housing',
-    city: 'Santa Monica',
-    state: 'CA',
-    photo: `${this.baseUrl}/brandon-griggs-wR11KBaB86U-unsplash.jpg`
-  },
-  {
-    id: 3,
-    name: 'Warm Beds Housing Support',
-    city: 'Juneau',
-    state: 'AK',
-    photo: `${this.baseUrl}/i-do-nothing-but-love-lAyXdl1-Wmc-unsplash.jpg`
-  }];
+  houseService = inject(HouseService);
 
   constructor(private route: ActivatedRoute) {}
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.housingLocation = this.houses.find(
-      house => house.id == this.id) as House;
+    this.housingLocation = this.houseService.find(this.id);
     this.applyForm = new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl(''),
